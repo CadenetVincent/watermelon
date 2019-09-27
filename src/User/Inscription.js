@@ -25,6 +25,7 @@
 
      this.handleInput = this.handleInput.bind(this);
      this.onSubmit = this.onSubmit.bind(this);
+     this.handleCheck = this.handleCheck.bind(this);
 
    }
 
@@ -45,8 +46,6 @@
     let fieldValidationErrors = this.state.formErrors;
     let formValid = this.state.formValid;
 
-    let isValid = this.state.allValid;
-
     let email_users = this.state.email_users;
     let password_users = this.state.password_users;
 
@@ -58,27 +57,27 @@
 
       case 'first_name_users':
       formValid.first_name_users = value.length >= 2;
-      fieldValidationErrors.first_name_users = formValid.first_name_users ? '' : ' is too short';
+      fieldValidationErrors.first_name_users = formValid.first_name_users ? '' : 'First name is too short.';
       break;
 
       case 'last_name_users' :
       formValid.last_name_users = value.length >= 2;
-      fieldValidationErrors.last_name_users = formValid.last_name_users ? '' : ' is too short';
+      fieldValidationErrors.last_name_users = formValid.last_name_users ? '' : 'Last name is too short?';
       break;
 
       case 'email_users':
       formValid.email_users = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-      fieldValidationErrors.email_users = formValid.email_users ? '' : ' is invalid';
+      fieldValidationErrors.email_users = formValid.email_users ? '' : 'Email is invalid.';
       break;
 
       case 'password_users_confirm':
       formValid.password_users_confirm = value == password_users ? true : false;
-      fieldValidationErrors.password_users_confirm = formValid.password_users_confirm ? '' : ' is invalid';
+      fieldValidationErrors.password_users_confirm = formValid.password_users_confirm ? '' : 'Password confirm is not the same.';
       break;
 
       case 'password_users':
       formValid.password_users = value.length >= 6;
-      fieldValidationErrors.password_users = formValid.password_users ? '' : ' is too short';
+      fieldValidationErrors.password_users = formValid.password_users ? '' : 'Password is too short';
       break;
 
       default:
@@ -86,7 +85,6 @@
     }
 
     this.setState({formErrors: fieldValidationErrors,
-       allValid : isValid,
        formValid : formValid
     }, this.validateForm);
   }
@@ -95,7 +93,12 @@
 
     e.preventDefault();
 
+    if(this.state.allValid == true)
+    {
+
     this.props.history.push('/menu');
+
+    }
 
   }
 
@@ -106,6 +109,20 @@
    const value = e.target.value;
    this.setState({[name]: value},() => { this.validateField(name, value)});
  }
+
+ handleCheck = (e) => {
+
+  if (e.checked){
+
+    this.setState({is_admin_users : true});
+
+  }else{
+
+    this.setState({is_admin_users : false});
+
+  }
+
+  }
 
 
  render() {
@@ -206,7 +223,10 @@
 
 
     <Col xs={6}>
-    <Form.Check label="admin" aria-label="option 1" />
+    <Form.Check 
+    label="admin" 
+    aria-label="option 1"
+    onClick={this.handleCheck} />
     </Col>
 
     <Col xs={6}>
