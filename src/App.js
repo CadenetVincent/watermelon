@@ -7,6 +7,10 @@ import './App.css';
 import Authentification from './User/Authentification.js';
 import Inscription from './User/Inscription.js';
 import Menu from './User/Menu.js';
+import Users from './User/Users.js';
+import User_edit from './User/User_edit.js';
+
+import NavbarMenu from './User/Navbarmenu.js';
 
 import Money_deposit from './Transaction/Money_deposit.js';
 import Money_see from './Transaction/Money_see.js';
@@ -18,75 +22,108 @@ import Delete_card from './Card/Delete_card.js';
 import Update_card from './Card/Update_card.js';
 import See_card from './Card/See_card';
 
-var isAdmin = true;
-
-function App() {
-  return (
-        
-    <Router>
-    <div className="post_main">
-
-
-    <div className="main">
-
-    <Switch>
-
-    <Route exact path="/authentification" component={ Authentification } />
-    <Route exact path="/inscription" component={ Inscription } />
-    
-    <PrivateRoute exact path="/menu" component={Menu} />
-
-    <PrivateRoute exact path="/add_card" component={Add_card} />
-    <PrivateRoute exact path="/see_card" component={See_card} />
-    <PrivateRoute exact path="/delete_card" component={Delete_card} />
-    <PrivateRoute exact path="/update_card" component={Update_card} />
-
-    <PrivateRoute exact path="/money_withdrawal" component={Money_withdrawal} />
-    <PrivateRoute exact path="/money_transit" component={Money_transit} />
-    <PrivateRoute exact path="/money_see" component={Money_see} />
-    <PrivateRoute exact path="/money_deposit" component={Money_deposit} />
-
-    <Route component={NoMatch} />
-
-    </Switch>
-
-    </div>
+import * as DataRequest from './Data/data_request';
 
 
 
-    </div>
-    </Router>
-  );
-}
+class App extends React.Component {
 
-  function NoMatch({ location }) {
-  return (
-    <div>
-      <h3>
-       <p> <i class="fas fa-bug"></i> No match for <code>{location.pathname}</code></p>
-      </h3>
-    </div>
-  );
+  constructor(props)
+  {
+    super(props);
+    this.state = {user_used : ""};
+    this.logoutuser = this.logoutuser.bind(this);
   }
 
-    function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        (isAdmin == true) ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+  logoutuser()
+  {
 
-export default App;
+    localStorage.removeItem("connected_user");
+
+    if(typeof this.history !== 'undefined')
+    {
+      this.history.push('/authentification');
+    }else
+    {
+      window.location = "/authentification";
+    }
+
+  }
+
+  render(){
+
+    return (
+
+      <Router>
+      <div className="post_main">
+
+      <div className="main">
+
+      <NavbarMenu logoutuser={this.logoutuser} />
+
+      <Switch>
+
+      <Route exact path="/authentification" component={ Authentification } />
+      <Route exact path="/inscription" component={ Inscription } />
+      <PrivateRoute exact path="/menu" component={Menu} />
+
+      <PrivateRoute exact path="/add_card" component={Add_card} />
+      <PrivateRoute exact path="/see_card" component={See_card} />
+      <PrivateRoute exact path="/delete_card" component={Delete_card} />
+      <PrivateRoute exact path="/update_card" component={Update_card} />
+
+      <PrivateRoute exact path="/users" component={Users} />
+      <PrivateRoute exact path='/user/edit/:id' component={ User_edit } />
+
+      <PrivateRoute exact path="/money_withdrawal" component={Money_withdrawal} />
+      <PrivateRoute exact path="/money_transit" component={Money_transit} />
+      <PrivateRoute exact path="/money_see" component={Money_see} />
+      <PrivateRoute exact path="/money_deposit" component={Money_deposit} />
+
+      <Route component={NoMatch} />
+
+      </Switch>
+
+      </div>
+
+      </div>
+      </Router>
+      );
+
+    }
+  }
+
+  function NoMatch({ location }) {
+    return (
+    <div>
+    <h3>
+    <p> <i class="fas fa-bug"></i> No match for <code>{location.pathname}</code></p>
+    </h3>
+    </div>
+    );
+  }
+
+  function PrivateRoute({ component: Component, ...rest }) {
+
+    var isConnect = DataRequest.get_current_user();
+
+    return (
+    <Route
+    {...rest}
+    render={props =>
+      (isConnect) ? (
+      <Component {...props} />
+      ) : (
+      <Redirect
+      to={{
+        pathname: "/authentification",
+        state: { from: props.location }
+      }}
+      />
+      )
+    }
+    />
+    );
+  }
+
+  export default App;

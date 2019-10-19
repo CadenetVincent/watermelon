@@ -13,7 +13,7 @@
 
     return (
       <div>
-      <h2> Money see </h2>
+      <h2 className="title_used"> Money </h2>
       </div>)
 
 }

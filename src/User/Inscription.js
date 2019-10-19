@@ -1,6 +1,9 @@
   import React, { Component } from "react";
   import {FormControl,Button,Form,Nav,Navbar,Row,Card,Col,Breadcrumb} from 'react-bootstrap';
   import { FormErrors } from '../FormErrors';
+  import * as DataRequest from '../Data/data_request';
+
+
 
   class Inscription extends React.Component {
 
@@ -11,81 +14,46 @@
 
       this.state = {
 
-       id_users : "",
-       first_name_users : "",
-       last_name_users : "",
-       email_users : "",
-       password_users : "",
-       password_users_confirm : "",
-       is_admin_users : false,
-       formErrors: {id_users : "",first_name_users : "",last_name_users : "",email_users : "",password_users : "",password_users_confirm : "",is_admin_users : false},
-       formValid: {first_name_users : false, last_name_users : false, email_users : false, password_users : false, password_users_confirm : false},
+       user_used : "",
+       formErrors: {first_name_users : "",last_name_users : "",email_users : "",password_users : "",password_users_confirm : "",is_admin_users : false, is_exist : ""},
+       usersExist : [],
        allValid : false
+
      }
 
      this.handleInput = this.handleInput.bind(this);
      this.onSubmit = this.onSubmit.bind(this);
      this.handleCheck = this.handleCheck.bind(this);
+     this.validateField = this.validateField.bind(this);
 
    }
 
-   validateForm() {
-    this.setState({allValid: this.state.formValid.first_name_users 
-                          && this.state.formValid.last_name_users
-                          && this.state.formValid.email_users
-                          && this.state.formValid.password_users
-                          && this.state.formValid.password_users_confirm});
-  }
+   componentDidMount()
+   {
+     this.setState({ usersExist: DataRequest.parsing_user_file() });
+   }
 
-  errorClass(error) {
-    return(error.length === 0 ? '' : 'has-error');
-  }
+   validateForm() {
+    this.setState({allValid: (this.state.formErrors.first_name_users == "ready")
+      && (this.state.formErrors.last_name_users == "ready")
+      && (this.state.formErrors.email_users == "ready")
+      && (this.state.formErrors.password_users == "ready")
+      && (this.state.formErrors.password_users_confirm == "ready") });
+   }
 
   validateField(fieldName, value) {
 
-    let fieldValidationErrors = this.state.formErrors;
-    let formValid = this.state.formValid;
+    var formErrors = this.state.formErrors;
+    formErrors.is_exist = "";
 
-    let email_users = this.state.email_users;
-    let password_users = this.state.password_users;
+    let user = {
+      password_users : this.state.password_users,
+      password_users_confirm : this.state.password_users_confirm
+    };
 
-    let password_users_confirm = this.state.password_users_confirm;
-    let first_name_users = this.state.first_name_users;
-    let last_name_users = this.state.last_name_users;
+   formErrors = DataRequest.validate_field_user(fieldName,value,formErrors,user);
 
-    switch(fieldName) {
-
-      case 'first_name_users':
-      formValid.first_name_users = value.length >= 2;
-      fieldValidationErrors.first_name_users = formValid.first_name_users ? '' : 'First name is too short.';
-      break;
-
-      case 'last_name_users' :
-      formValid.last_name_users = value.length >= 2;
-      fieldValidationErrors.last_name_users = formValid.last_name_users ? '' : 'Last name is too short?';
-      break;
-
-      case 'email_users':
-      formValid.email_users = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-      fieldValidationErrors.email_users = formValid.email_users ? '' : 'Email is invalid.';
-      break;
-
-      case 'password_users_confirm':
-      formValid.password_users_confirm = value == password_users ? true : false;
-      fieldValidationErrors.password_users_confirm = formValid.password_users_confirm ? '' : 'Password confirm is not the same.';
-      break;
-
-      case 'password_users':
-      formValid.password_users = value.length >= 6;
-      fieldValidationErrors.password_users = formValid.password_users ? '' : 'Password is too short';
-      break;
-
-      default:
-      break;
-    }
-
-    this.setState({formErrors: fieldValidationErrors,
-       formValid : formValid
+    this.setState({formErrors: formErrors,
     }, this.validateForm);
   }
 
@@ -93,39 +61,80 @@
 
     e.preventDefault();
 
-    if(this.state.allValid == true)
+    var MaxUniqueId = 0;
+
+    var user = {
+      id_users : 0,
+      first_name_users : this.state.user_used.first_name_users,
+      last_name_users : this.state.user_used.last_name_users,
+      email_users : this.state.user_used.email_users,
+      password_users : this.state.user_used.password_users,
+      password_users_confirm : this.state.user_used.password_users_confirm,
+      is_admin_users : this.state.user_used.is_admin_users
+    };
+
+    const UserIsExist = this.state.usersExist.filter(function (item) {
+
+      if((user.first_name_users == item.first_name_users
+      && user.last_name_users == item.last_name_users)
+      || user.email_users == item.email_users)
+      {
+        return item;
+      }
+
+    });
+
+    if (UserIsExist.length > 0){
+
+      this.setState({formErrors : {...this.state.formErrors, is_exist: "This user already exists."}});
+
+    }else if(this.state.allValid == true)
     {
 
-    this.props.history.push('/menu');
+    MaxUniqueId = Math.max.apply(Math, this.state.usersExist.map(function(item) { return item.id_users; }));
+    MaxUniqueId++;
+
+    user.id_users = MaxUniqueId;
+
+    var list_users = this.state.usersExist;
+    list_users.push(user);
+
+    this.setState({usersExist : list_users});
+
+    localStorage.setItem("list_users",JSON.stringify(list_users));
+
+    this.props.history.push('/authentification');
 
     }
 
   }
 
 
+handleInput = (e) => {
+ const name = e.target.name;
+ const value = e.target.value;
 
-  handleInput = (e) => {
-   const name = e.target.name;
-   const value = e.target.value;
-   this.setState({[name]: value},() => { this.validateField(name, value)});
- }
 
- handleCheck = (e) => {
-
-  if (e.checked){
-
-    this.setState({is_admin_users : true});
-
-  }else{
-
-    this.setState({is_admin_users : false});
-
+  this.setState({
+  user_used : {
+    ...this.state.user_used,
+    [name] : e.target.value,
   }
+},
+() => {this.validateField(name,value)});
+}
 
+handleCheck = (e) => {
+
+   this.setState({
+  user_used : {
+    ...this.state.user_used,
+    is_admin_users : !this.state.user_used.is_admin_users
   }
+});
+}
 
-
- render() {
+render() {
 
 
   return (
@@ -141,7 +150,7 @@
 
     <div class="panel_etablishment">
 
-    <Form onSubmit={this.onSubmit}>
+    <Form onSubmit={this.onSubmit} autoComplete="none">
 
     <Row>
 
@@ -153,7 +162,7 @@
     <Col sm={9}>
     <Form.Control
     type="text"  
-    value={this.state.first_name_users}
+    value={this.state.user_used.first_name_users}
     onChange={this.handleInput}
     name="first_name_users"
     />
@@ -169,7 +178,7 @@
     <Col sm={9}>
     <Form.Control  
     type="text" 
-    value={this.state.last_name_users}
+    value={this.state.user_used.last_name_users}
     onChange={this.handleInput}
     name="last_name_users"/>
     </Col>
@@ -184,9 +193,10 @@
     <Col sm={9}>
     <Form.Control  
     type="email" 
-    value={this.state.email_users}
+    value={this.state.user_used.email_users}
     onChange={this.handleInput}
-    name="email_users"/>
+    name="email_users"
+    autoComplete="none"/>
     </Col>
     </Form.Group>
     </Col>
@@ -199,7 +209,7 @@
     <Col sm={9}>
     <Form.Control  
     type="password" 
-    value={this.state.password_users}
+    value={this.state.user_used.password_users}
     onChange={this.handleInput}
     name="password_users"/>
     </Col>
@@ -214,7 +224,7 @@
     <Col sm={9}>
     <Form.Control  
     type="password" 
-    value={this.state.password_users_confirm}
+    value={this.state.user_used.password_users_confirm}
     onChange={this.handleInput}
     name="password_users_confirm"/>
     </Col>
