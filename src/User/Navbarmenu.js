@@ -16,6 +16,7 @@
     componentDidMount()
     {
       this.setState({user_used : DataRequest.get_current_user()});
+      
     }
 
 
@@ -61,7 +62,7 @@
         <Nav className="mr-auto">
         <Nav.Link className="navbar_link" href="/menu"><div><i class="fas fa-ellipsis-v"></i> Menu</div></Nav.Link>
         <Nav.Link className="navbar_link" href="/users"><div><i class="fas fa-ellipsis-v"></i> Users</div></Nav.Link>
-        <Nav.Link className="navbar_link" href="/see_card"><div><i class="fas fa-graduation-cap"></i> Cards</div></Nav.Link>
+        <Nav.Link className="navbar_link" href="/cards/all"><div><i class="fas fa-graduation-cap"></i> Cards</div></Nav.Link>
         <Nav.Link className="navbar_link" href="/money_see"><div><i class="fas fa-users"></i> Transaction</div></Nav.Link>
         </Nav>
 

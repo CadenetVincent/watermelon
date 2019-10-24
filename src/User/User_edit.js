@@ -35,7 +35,7 @@ class User_edit extends Component {
     }
   }
 
-  this.setState({ list_user : DataRequest.parsing_user_file(),
+  this.setState({ list_user : list_user,
                   user_used : user_used,
                   user_connected : DataRequest.get_current_user()});
  }

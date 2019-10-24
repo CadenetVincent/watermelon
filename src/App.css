@@ -28,6 +28,12 @@
   display: inline-block;
 }
 
+.horizontal_form_adm
+{
+  height: 3px;
+  background-color: gray;
+}
+
 .sign_up_btn
 {
  display: inline-block;
@@ -39,10 +45,6 @@
   background-color: #593D12;
   border: 2px solid #593D12;
   border-radius: 10px;
-}
-
-.logout_btn a 
-{
   color: white;
 }
 
@@ -51,6 +53,7 @@
   background-color: white;
   border: 2px solid white;
   border-radius: 10px;
+  color: #593D12;
 }
 
 .logout_btn:hover > a

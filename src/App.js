@@ -16,11 +16,12 @@ import Money_deposit from './Transaction/Money_deposit.js';
 import Money_see from './Transaction/Money_see.js';
 import Money_transit from './Transaction/Money_transit.js';
 import Money_withdrawal from './Transaction/Money_withdrawal.js';
+import Create_Wallet from './Transaction/Create_Wallet.js';
 
 import Add_card from './Card/Add_card.js';
 import Delete_card from './Card/Delete_card.js';
 import Update_card from './Card/Update_card.js';
-import See_card from './Card/See_card';
+import Cards from './Card/Cards';
 
 import * as DataRequest from './Data/data_request';
 
@@ -68,9 +69,9 @@ class App extends React.Component {
       <PrivateRoute exact path="/menu" component={Menu} />
 
       <PrivateRoute exact path="/add_card" component={Add_card} />
-      <PrivateRoute exact path="/see_card" component={See_card} />
+      <PrivateRoute exact path="/cards/:value" component={Cards} />
       <PrivateRoute exact path="/delete_card" component={Delete_card} />
-      <PrivateRoute exact path="/update_card" component={Update_card} />
+      <PrivateRoute exact path="/card/edit/:id" component={Update_card} />
 
       <PrivateRoute exact path="/users" component={Users} />
       <PrivateRoute exact path='/user/edit/:id' component={ User_edit } />
@@ -79,6 +80,7 @@ class App extends React.Component {
       <PrivateRoute exact path="/money_transit" component={Money_transit} />
       <PrivateRoute exact path="/money_see" component={Money_see} />
       <PrivateRoute exact path="/money_deposit" component={Money_deposit} />
+      <PrivateRoute exact path="/create" component={Create_Wallet} />
 
       <Route component={NoMatch} />
 

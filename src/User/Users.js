@@ -19,7 +19,7 @@ class Users extends Component {
 
   componentDidMount(){
 
-    this.setState({ User : DataRequest.parsing_user_file() });
+    this.setState({ User : DataRequest.get_list_user() });
 
   }
 
@@ -55,6 +55,9 @@ class Users extends Component {
       <div className="container_main">
 
       <h2 className="title_used"> Users </h2>
+
+      { this.state.User == "undefined" ? <h3> You have to be an admin ! </h3> :
+
       <Table striped bordered hover className="table_used_school">
       <thead>
       <tr>
@@ -73,6 +76,9 @@ class Users extends Component {
 
       </tbody>
       </Table>
+
+      }
+
       </div>
       );
     }
