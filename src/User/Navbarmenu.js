@@ -56,14 +56,14 @@
 
         )
 
-      return (
+        return (
         <Navbar bg="light" variant="light">
         <Navbar.Brand className="navbar_title" href="/menu"> &nbsp; <strong>Watermelon</strong> &nbsp; </Navbar.Brand>
         <Nav className="mr-auto">
         <Nav.Link className="navbar_link" href="/menu"><div><i class="fas fa-ellipsis-v"></i> Menu</div></Nav.Link>
         <Nav.Link className="navbar_link" href="/users"><div><i class="fas fa-ellipsis-v"></i> Users</div></Nav.Link>
         <Nav.Link className="navbar_link" href="/cards/all"><div><i class="fas fa-graduation-cap"></i> Cards</div></Nav.Link>
-        <Nav.Link className="navbar_link" href="/money_see"><div><i class="fas fa-users"></i> Transaction</div></Nav.Link>
+        <Nav.Link className="navbar_link" href="/create"><div><i class="fas fa-users"></i> Transaction</div></Nav.Link>
         </Nav>
 
         {this.state.user_used ? authLinks : guestLinks}
@@ -76,4 +76,4 @@
 
 
 
-export default Navbarmenu;
+    export default Navbarmenu;

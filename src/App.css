@@ -71,6 +71,46 @@
   font-size: 20px;
 }
 
+.table_used_school
+{
+  background-color: white;
+}
+
+.title_monnaie
+{
+  text-decoration: underline;
+  font-weight: bold;
+  background-color: whitesmoke;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.add_card
+{
+  padding: 5px 5px 5px 5px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 20px; 
+}
+
+.add_card *
+{
+ color: black!important; 
+}
+
+.add_card:hover *
+{
+  color: white!important;
+}
+
+.add_card:hover
+{
+  background-color: black;
+  border: 2px solid white;
+}
+
 .button_login:hover
 {
   background-color: white;
@@ -125,6 +165,31 @@
   height: 100%;
 
   margin-bottom: 10px;
+}
+
+footer
+{
+  background-color: #F8F9FA;
+  height: 4rem;
+  text-align: center;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 1rem;
+  font-style: italic;
+  position: fixed;
+  z-index: 1;
+
+}
+
+.footer_component_left
+{
+   float: left;
+}
+
+.footer_component_right
+{
+  float: right;
 }
 
 @keyframes App-logo-spin {

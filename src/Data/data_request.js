@@ -17,6 +17,202 @@ export function parsing_user_file()
 return LocalUsers;
 }
 
+
+export function parsing_money(whose)
+{
+
+  var LocalMoney = "";
+
+  if (localStorage.getItem(whose) !== null) {
+
+    LocalMoney = JSON.parse(localStorage.getItem(whose));
+
+  }else{
+
+    LocalMoney = undefined;
+  }
+
+  return LocalMoney;
+
+}
+
+export function get_current_transfert(whose,wallet)
+{
+
+  var LocalMoney = parsing_money(whose);
+
+  var ListOfTransfert = false;
+
+  if(LocalMoney != undefined)
+  {
+
+   ListOfTransfert = LocalMoney.filter(function (item) {
+
+    if(whose == "money_deposit" || whose == "money_transit")
+    {
+      if(wallet.id_wallet == item.id_wallet)
+      {
+        return item;
+      }
+
+    }else if(whose == "money_withdrawal")
+    {
+      if(wallet.id_wallet == item.debited_wallet_id || wallet.id_wallet == item.credited_wallet_id)
+      {
+        return item;
+      }
+
+    }
+
+  });
+
+ }
+
+ return ListOfTransfert;
+
+}
+
+export function check_value_monnaie(value)
+{
+
+  var error = "ready";
+
+  var float_balance = parseFloat(value);
+
+  var numberdecimal = 3;
+
+
+  if(isNaN(float_balance) || !value.match(/^-?\d*(\.\d+)?$/))
+  {
+
+    error = "Your balance is not a decimal number..";
+
+  }else
+  {
+
+    if (undefined !== value.toString().split(".")[1] && value.toString().split(".")[1].length) {
+      numberdecimal = value.toString().split(".")[1].length;
+    }else
+    {
+      numberdecimal = 0;
+    }
+
+    if(numberdecimal > 2 || value > 10000)
+    {
+     error =  "Your decimal number is too long";
+   }
+ }
+
+
+ return error;
+
+}
+
+export function get_user_name_from_wallet_id(wallet_id)
+{
+  const AllWallet = parsing_wallet_file();
+
+  const wallet =  AllWallet.filter(function (item) {
+    if(item.id_wallet == wallet_id)
+      return item;
+  });
+
+  const user = get_name_user_from_id(wallet[0].id_users);
+
+  if(user == null || user == undefined)
+  {
+    return false;
+  }
+
+  return user;
+
+}
+
+
+export function parsing_wallet_file()
+{
+
+  var LocalWallet = "";
+
+  if(localStorage.getItem('list_wallets') === null)
+  {
+
+    LocalWallet = require("../Data/wallets.json");
+
+  }else
+  {
+
+    LocalWallet = JSON.parse(localStorage.getItem('list_wallets'));
+
+  }
+
+  return LocalWallet;
+
+}
+
+
+
+export function get_current_wallet()
+{
+
+  const actual_user = get_current_user();
+
+  const LocalWallet = parsing_wallet_file();
+
+  const actual_wallet = LocalWallet.filter(function (item) {
+    if(item.id_users == actual_user.id_users)
+      return item;
+  });
+
+  return actual_wallet[0];
+
+}
+
+export function update_wallet(actual_wallet,AllWallet)
+{
+
+  var index_wallet = -1;
+
+  for (var i = AllWallet.length - 1; i >= 0; i--) {
+
+    if(AllWallet[i].id_wallet == actual_wallet.id_wallet)
+    {
+      index_wallet = AllWallet.indexOf(AllWallet[i]);
+    }
+  }
+
+
+  if(index_wallet != -1)
+  {
+
+    AllWallet[index_wallet] = actual_wallet;
+
+    localStorage.setItem("list_wallets",JSON.stringify(AllWallet));
+
+  }
+
+}
+
+export function get_wallet_by_user_id(id)
+{
+
+  const list_wallet = parsing_wallet_file();
+
+  const actual_wallet = list_wallet.filter(function (item) {
+    if(item.id_users == id)
+      return item;
+  });
+
+  if(actual_wallet.length < 1)
+  {
+    return false;
+  }
+
+  return actual_wallet;
+
+}
+
+
 export function parsing_card_file()
 {
   var LocalCards = "";
@@ -111,15 +307,15 @@ export function get_name_user_from_id(id)
   if(Array.isArray(AllUsers[1]))
   {
 
-  const User = AllUsers[1].find(function (item) {
+    const User = AllUsers[1].find(function (item) {
 
-  return id == item;
-    
-  });
+      return id == item;
 
-  const IndexOf = Object.keys(AllUsers[1]).find(key => AllUsers[1][key] === User); 
+    });
 
-  return AllUsers[0][IndexOf]; 
+    const IndexOf = Object.keys(AllUsers[1]).find(key => AllUsers[1][key] === User); 
+
+    return AllUsers[0][IndexOf]; 
 
   }
 
@@ -134,17 +330,17 @@ export function get_id_user_from_name(name)
   if(Array.isArray(AllUsers[0]))
   {
 
-  const User = AllUsers[0].find(function (item) {
+    const User = AllUsers[0].find(function (item) {
 
 
       return name == item;
-    
 
-  });
 
-  const IndexOf = Object.keys(AllUsers[0]).find(key => AllUsers[0][key] === User); 
+    });
 
-  return AllUsers[1][IndexOf];
+    const IndexOf = Object.keys(AllUsers[0]).find(key => AllUsers[0][key] === User); 
+
+    return AllUsers[1][IndexOf];
 
   }
 
@@ -233,14 +429,14 @@ export function date_to_date_format_json(date)
   if(date instanceof Date)
   {
 
-  var month = date.getMonth();
-  var day = date.getDate();
-  const year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    const year = date.getFullYear();
 
-  day = day <= 9 ? "0"+day : day;
-  month = month < 9 ? "0"+(month+1) : (month+1);
+    day = day <= 9 ? "0"+day : day;
+    month = month < 9 ? "0"+(month+1) : (month+1);
 
-  return(month+"/"+day+"/"+year);
+    return(month+"/"+day+"/"+year);
 
   }else
 
@@ -274,11 +470,11 @@ export function date_format_json_to_date_picker(date)
   if(date != false)
   {
 
-  var table_date = date.split("/");
+    var table_date = date.split("/");
 
-  table_date[2] = table_date[2].substring(2, 4);
+    table_date[2] = table_date[2].substring(2, 4);
 
-  return(table_date[0]+"/"+table_date[2]);
+    return(table_date[0]+"/"+table_date[2]);
 
   }
 
@@ -288,43 +484,43 @@ export function date_format_json_to_date_picker(date)
 
 export function get_card_by_card_id(id,list_card)
 {
-    var card_used = "";
+  var card_used = "";
 
-    for (var i = list_card.length - 1; i >= 0; i--) {
-      if(list_card[i].card_id == id)
-      {
-        card_used = list_card[i];
-      }
+  for (var i = list_card.length - 1; i >= 0; i--) {
+    if(list_card[i].card_id == id)
+    {
+      card_used = list_card[i];
     }
+  }
 
-    return card_used;
+  return card_used;
 }
 
 export function get_card_type_updated(card_update_id)
 {
 
-    var list_card = parsing_card_file();
+  var list_card = parsing_card_file();
 
-    var CardTypes = parsing_card_type_file();
+  var CardTypes = parsing_card_type_file();
 
-    const card_used = get_card_by_card_id(card_update_id,list_card);
+  const card_used = get_card_by_card_id(card_update_id,list_card);
 
-    if(card_used != "")
-    {
+  if(card_used != "")
+  {
 
     const niceType = card_used.credit_type.charAt(0).toUpperCase() + card_used.credit_type.slice(1);
 
     const card_type_update = { [card_used.credit_type] :{
-    "niceType": niceType,
-    "type": card_used.credit_type,
-    "patterns":[card_used.credit_number.substring(0, 4)]}
+      "niceType": niceType,
+      "type": card_used.credit_type,
+      "patterns":[card_used.credit_number.substring(0, 4)]}
     };
 
     CardTypes = Object.assign(CardTypes,card_type_update);
 
-    }
+  }
 
-    return CardTypes;
+  return CardTypes;
 }
 
 export function get_bank_name_updated(name)
@@ -450,10 +646,10 @@ export function validate_field_card(fieldName,value,formErrors)
     if(is_date_form != false)
     {
 
-    if(!(date_regex.test(date_to_date_format_json(value))))
-    { 
-      formErrors.date = 'Invalid type of date'; 
-    }
+      if(!(date_regex.test(date_to_date_format_json(value))))
+      { 
+        formErrors.date = 'Invalid type of date'; 
+      }
 
     }else
     {

@@ -60,7 +60,7 @@ class Cards extends Component {
       <div className="container_main">
 
       <Breadcrumb>
-      <Breadcrumb.Item href="/add_card">
+      <Breadcrumb.Item className="add_card" href="/add_card">
       Add Card
       </Breadcrumb.Item>
       </Breadcrumb>
