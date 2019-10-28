@@ -81,13 +81,30 @@ export function get_user_name_from_wallet_id(wallet_id) {
         if (item.id_wallet == wallet_id) return item;
     });
 
-    const user = get_name_user_from_id(wallet[0].id_users);
+    const user = get_name_user_from_id_without_verif(wallet[0].id_users);
+               
 
     if (user == null || user == undefined) {
         return false;
     }
 
     return user;
+}
+
+export function get_name_user_from_id_without_verif(id) {
+
+    const AllUsers = get_all_users_name_without_verif();
+
+        const User = AllUsers[1].find(function(item) {
+            return id == item;
+        });
+
+        const IndexOf = Object.keys(AllUsers[1]).find(
+            key => AllUsers[1][key] === User
+        );
+
+        return AllUsers[0][IndexOf];
+    
 }
 
 export function parsing_wallet_file() {
@@ -227,7 +244,8 @@ export function get_name_user_from_id(id) {
 }
 
 export function get_id_user_from_name(name) {
-    const AllUsers = get_all_users_name();
+
+    const AllUsers = get_all_users_name_without_verif();
 
     if (Array.isArray(AllUsers[0])) {
         const User = AllUsers[0].find(function(item) {

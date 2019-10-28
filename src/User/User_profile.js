@@ -24,6 +24,17 @@ class User_profile extends React.Component {
                 <td>{this.props.obj.is_admin_users ? "Yes" : "No"}</td>
 
                 <td>
+                    
+                    <Link
+                        to={"/cards/" + this.props.obj.id_users}
+                        className="btn btn-primary"
+                    >
+                        {" Cards for ID :  "+this.props.obj.id_users}
+                    </Link>
+                
+                </td>
+
+                <td>
                     <Link
                         to={"/user/edit/" + this.props.obj.id_users}
                         className="btn btn-primary"

@@ -34,13 +34,15 @@ class Money_deposit extends React.Component {
     };
 
     handleUserName = ({ target }) => {
-        this.setState({
-            deposit_error: "",
-            paiement: {
-                ...this.state.paiement,
-                [target.name]: target.value
-            }
-        });
+
+            this.setState({
+                deposit_error: "ready",
+                paiement: {
+                    ...this.state.paiement,
+                    [target.name]: target.value
+                }
+            });
+
     };
 
     handleSubmit(e) {
@@ -242,13 +244,19 @@ class Money_deposit extends React.Component {
                                                     <option value="undefined">
                                                         Select a user name...
                                                     </option>
-                                                    {typeof this.props.AllNameUsers[0] != "undefined" ? this.props.AllNameUsers[0].map(
-                                                        item => (
-                                                            <option key={item}>
-                                                                {item}
-                                                            </option>
-                                                        )
-                                                    ) : null}
+                                                    {typeof this.props
+                                                        .AllNameUsers[0] !=
+                                                    "undefined"
+                                                        ? this.props.AllNameUsers[0].map(
+                                                              item => (
+                                                                  <option
+                                                                      key={item}
+                                                                  >
+                                                                      {item}
+                                                                  </option>
+                                                              )
+                                                          )
+                                                        : null}
                                                 </Form.Control>
                                             </div>
                                         ) : null}

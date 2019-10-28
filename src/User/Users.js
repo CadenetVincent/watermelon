@@ -67,6 +67,7 @@ class Users extends Component {
                                 <th>Email</th>
                                 <th>Password</th>
                                 <th>Is an admin ?</th>
+                                <th>See their cards</th>
                                 <th colSpan="2">Action</th>
                             </tr>
                         </thead>
