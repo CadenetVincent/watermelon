@@ -60,6 +60,11 @@ class App extends React.Component {
                         <NavbarMenu logoutuser={this.logoutuser} />
 
                         <Switch>
+                            <PrivateRoute
+                                exact
+                                path="/"
+                                component={Menu}
+                            />
                             <Route
                                 exact
                                 path="/authentification"
