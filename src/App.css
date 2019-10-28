@@ -1,202 +1,178 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
-.sign_in_btn
-{
-  display: inline-block;
+.sign_in_btn {
+    display: inline-block;
 }
 
-.horizontal_form_adm
-{
-  height: 3px;
-  background-color: gray;
+.horizontal_form_adm {
+    height: 3px;
+    background-color: gray;
 }
 
-.sign_up_btn
-{
- display: inline-block;
- margin-left: 10px;
+.sign_up_btn {
+    display: inline-block;
+    margin-left: 10px;
 }
 
-.logout_btn
-{
-  background-color: #593D12;
-  border: 2px solid #593D12;
-  border-radius: 10px;
-  color: white;
+.logout_btn {
+    background-color: #593d12;
+    border: 2px solid #593d12;
+    border-radius: 10px;
+    color: white;
 }
 
-.logout_btn:hover 
-{
-  background-color: white;
-  border: 2px solid white;
-  border-radius: 10px;
-  color: #593D12;
+.logout_btn:hover {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: #593d12;
 }
 
-.logout_btn:hover > a
-{
-  color: #593D12;
+.logout_btn:hover > a {
+    color: #593d12;
 }
 
-.button_login
-{
-  padding: 5px 5px 5px 5px;
-  background-color: #3AC140;
-  border: 2px solid #593D12;
-  border-radius: 10px;
-  color: white;
-  font-size: 20px;
+.button_login {
+    padding: 5px 5px 5px 5px;
+    background-color: #3ac140;
+    border: 2px solid #593d12;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
 }
 
-.table_used_school
-{
-  background-color: white;
+.table_used_school {
+    background-color: white;
 }
 
-.title_monnaie
-{
-  text-decoration: underline;
-  font-weight: bold;
-  background-color: whitesmoke;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
+.title_monnaie {
+    text-decoration: underline;
+    font-weight: bold;
+    background-color: whitesmoke;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
-.add_card
-{
-  padding: 5px 5px 5px 5px;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 10px;
-  font-size: 20px; 
+.add_card {
+    padding: 5px 5px 5px 5px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 20px;
 }
 
-.add_card *
-{
- color: black!important; 
+.add_card * {
+    color: black !important;
 }
 
-.add_card:hover *
-{
-  color: white!important;
+.add_card:hover * {
+    color: white !important;
 }
 
-.add_card:hover
-{
-  background-color: black;
-  border: 2px solid white;
+.add_card:hover {
+    background-color: black;
+    border: 2px solid white;
 }
 
-.button_login:hover
-{
-  background-color: white;
-  border: 2px solid #3AC140;
-  color: #3AC140;
+.button_login:hover {
+    background-color: white;
+    border: 2px solid #3ac140;
+    color: #3ac140;
 }
 
-.title_used
-{
-  text-decoration: underline;
-  font-weight: bold;
-  background-color: whitesmoke;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
+.title_used {
+    text-decoration: underline;
+    font-weight: bold;
+    background-color: whitesmoke;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
-.info_form
-{
-  background-color: whitesmoke;
-  font-size: 12px!important;
-  text-align: center;
-  border: 2px solid black;
-  font-weight: bold;
-  margin-bottom: 10px;
+.info_form {
+    background-color: whitesmoke;
+    font-size: 12px !important;
+    text-align: center;
+    border: 2px solid black;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.send_info
-{
-  background-color: transparent;
-  color : black;
-  font-weight: bold;
-  padding: 10px;
-  text-align: center;
-  margin-top: 10px;
+.send_info {
+    background-color: transparent;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.panel_error
-{
-  font-weight: bold;
-  color: red;
-  
+.panel_error {
+    font-weight: bold;
+    color: red;
 }
 
-.panel_etablishment
-{
-  background-color: white;
-  padding: 20px;
-  border: 2px solid #593D12;
-  border-radius: 10px;
-  color: #593D12;
-  height: 100%;
+.panel_etablishment {
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #593d12;
+    border-radius: 10px;
+    color: #593d12;
+    height: 100%;
 
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
-footer
-{
-  background-color: #F8F9FA;
-  height: 4rem;
-  text-align: center;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  padding: 1rem;
-  font-style: italic;
-  position: fixed;
-  z-index: 1;
-
+footer {
+    background-color: #f8f9fa;
+    height: 4rem;
+    text-align: center;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    font-style: italic;
+    position: fixed;
+    z-index: 1;
 }
 
-.footer_component_left
-{
-   float: left;
+.footer_component_left {
+    float: left;
 }
 
-.footer_component_right
-{
-  float: right;
+.footer_component_right {
+    float: right;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
