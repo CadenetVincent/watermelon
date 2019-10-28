@@ -483,7 +483,7 @@ handleSubmit = e => {
 
               </Row>
 
-              : <h3> You don't have the permission ! </h3> }
+              : <h3 class="panel_etablishment"> You don't have the permission ! </h3> }
 
               </div>
               );

@@ -274,6 +274,23 @@ export function get_current_card(value_url) {
     return result;
 }
 
+export function get_all_users_name_without_verif()
+{
+    var result = [];
+
+    const users_list = parsing_user_file();
+
+    result[0] = users_list.map(function(item) {
+        return item.first_name_users + " " + item.last_name_users;
+    });
+
+    result[1] = users_list.map(function(item) {
+        return item.id_users;
+    });
+
+    return result;
+}
+
 export function get_all_users_name() {
     var result = [];
 
@@ -290,6 +307,7 @@ export function get_all_users_name() {
             return item.id_users;
         });
     } else {
+
         result[0] =
             actual_user.first_name_users + " " + actual_user.last_name_users;
 

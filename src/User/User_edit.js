@@ -248,7 +248,7 @@ render() {
       </Row>
       </div>
 
-      : <h3>No users spotted</h3> }
+      : <h3 class="panel_etablishment">No users spotted</h3> }
 
       </div>
       )

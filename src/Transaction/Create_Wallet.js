@@ -87,7 +87,7 @@ class Create_Wallet extends React.Component {
             walletIsExist
         );
 
-        const AllNameUsers = DataRequest.get_all_users_name();
+        const AllNameUsers = DataRequest.get_all_users_name_without_verif();
 
         return (
             <div className="container">
@@ -262,10 +262,7 @@ class Create_Wallet extends React.Component {
 
                 <br />
                 <br />
-                <br />
-                <br />
-                <br />
-                <br />
+
             </div>
         );
     }

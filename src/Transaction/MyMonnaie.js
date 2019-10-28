@@ -242,13 +242,13 @@ class Money_deposit extends React.Component {
                                                     <option value="undefined">
                                                         Select a user name...
                                                     </option>
-                                                    {this.props.AllNameUsers[0].map(
+                                                    {typeof this.props.AllNameUsers[0] != "undefined" ? this.props.AllNameUsers[0].map(
                                                         item => (
                                                             <option key={item}>
                                                                 {item}
                                                             </option>
                                                         )
-                                                    )}
+                                                    ) : null}
                                                 </Form.Control>
                                             </div>
                                         ) : null}

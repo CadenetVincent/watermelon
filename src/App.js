@@ -116,7 +116,7 @@ class App extends React.Component {
 
 function NoMatch({ location }) {
     return (
-        <div>
+        <div class="panel_etablishment">
             <h3>
                 <p>
                     {" "}

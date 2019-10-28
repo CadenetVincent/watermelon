@@ -57,7 +57,7 @@ class Cards extends Component {
                 <h2 className="title_used"> Cards </h2>
 
                 {this.state.Card == "undefined" ? (
-                    <h3> You don't have the required rights ! </h3>
+                    <h3 class="panel_etablishment"> You don't have the required rights ! </h3>
                 ) : (
                     <Table striped bordered hover className="table_used_school">
                         <thead>
